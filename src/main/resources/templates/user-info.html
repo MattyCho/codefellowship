@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Info Page</title>
+</head>
+<body>
+    <h1>User Info</h1>
+    <h3 th:if="${username != null}" th:text="${'Current user: ' + username}"></h3>
+    <div th:text="${'Username: ' + usersUsername}"></div>
+    <div th:text="${'Name: ' + usersFirstName + ' ' + usersLastName}"></div>
+    <div th:text="${'Date of Birth: ' + usersDateOfBirth}"></div>
+    <div th:text="${'Biography: ' + usersBio}"></div>
+
+    <a href="/logout">Log out</a>
+</body>
+</html>
