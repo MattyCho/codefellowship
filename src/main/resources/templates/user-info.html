@@ -15,8 +15,11 @@
     <div th:text="${'Date of Birth: ' + usersDateOfBirth}"></div>
     <div th:text="${'Biography: ' + usersBio}"></div>
 
+    <form th:if="${username != usersUsername}" th:action="${'/follow-user/' + usersId}" th:method="PUT">
+        <input type="submit" value="Follow this user">
+    </form>
 
-    <form action="/createPost" method="POST">
+    <form th:if="${username == usersUsername}" action="/createPost" method="POST">
         <fieldset>
             <label for="userPost">Write your post</label>
             <input type="text" name="postBody">
@@ -26,6 +29,7 @@
 
     <ul th:each="post: ${usersPostList}">
         <li th:text="${post.body}"></li>
+        <h5 th:text="${'Posted on: ' + #temporals.format(post.createdAt, 'dd-MM-yyyy HH:mm')}"></h5>
     </ul>
 
     <a href="/logout">Log out</a>
