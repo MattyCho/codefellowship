@@ -5,6 +5,9 @@
 - The user's password is hashed before being stored.
 - Non-logged in users can only access the homepage, log in page, and sign up page.
 - User can make posts that will be user specific and saved to a database.
+- Posts will be displayed when looking at that users specific page.
+- Users can follow other users by clicking the "follow user" button on their respective pages.
+- Followed user's posts will displayed on the personal feed page.
 
 ## Routes
 - `/` - This is the homepage.
@@ -12,3 +15,4 @@
 - `/signup` - User can fill out a form with their username, first name, last name, date of birth, and a short biography.
 - `/users/{id}` - This page will display information on the user with the database id of {id} and all of their posts.
 - `/myprofile` - This page will display information on the current logged-in user and their post history.
+- `/feed` - Displays all the posts from followed users.

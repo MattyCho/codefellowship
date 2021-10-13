@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletException;
@@ -114,6 +115,7 @@ public class ApplicationUserController {
 
         ApplicationUser applicationUser = applicationUserRepository.findById(id).orElseThrow();
         m.addAttribute("applicationUser", applicationUser);
+        m.addAttribute("usersId", applicationUser.getId());
         m.addAttribute("usersUsername", applicationUser.getUsername());
         m.addAttribute("usersFirstName", applicationUser.getFirstName());
         m.addAttribute("usersLastName", applicationUser.getLastName());
@@ -132,5 +134,33 @@ public class ApplicationUserController {
             userPostRepository.save(newPost);
         }
         return new RedirectView("/myprofile");
+    }
+
+    @PutMapping("follow-user/{followedUserId}")
+    public RedirectView followUser(Principal p, @PathVariable Long followedUserId) {
+        if (p == null) {
+            throw new IllegalArgumentException("You must be logged in to follow users");
+        }
+
+        ApplicationUser followingUser = applicationUserRepository.findByUsername(p.getName());
+        ApplicationUser beingFollowedUser = applicationUserRepository.findById(followedUserId).orElseThrow();
+
+        followingUser.getFollowing().add(beingFollowedUser);
+        applicationUserRepository.save(followingUser);
+
+        return new RedirectView("/users/" + followedUserId);
+    }
+
+    @GetMapping("/feed")
+    public String getFeedPage(Principal p, Model m) {
+        if (p != null) {
+            String username = p.getName();
+            ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
+            m.addAttribute("username", username);
+        }
+
+        ApplicationUser currentUser = applicationUserRepository.findByUsername(p.getName());
+        m.addAttribute("usersFollowing", currentUser.getFollowing());
+        return "feed.html";
     }
 }

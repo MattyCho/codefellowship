@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Feed</title>
+</head>
+<body>
+    <h1>Personal Feed</h1>
+    <h3 th:if="${username != null}" th:text="${'Current user: ' + username}"></h3>
+    <a href="/logout">Log out</a>
+
+    <div th:each="user: ${usersFollowing}">
+        <p th:text="'Posts by: ' + ${user.username}"></p>
+        <ul th:each="post: ${user.userPostList}">
+            <li th:text="${post.body}"></li>
+            <h5 th:text="${'Posted on: ' + #temporals.format(post.createdAt, 'dd-MM-yyyy HH:mm')}"></h5>
+        </ul>
+    </div>
+</body>
+</html>

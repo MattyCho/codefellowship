@@ -10,8 +10,8 @@ public class UserPost {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    String body;
-    LocalDateTime createdAt = LocalDateTime.now();
+    public String body;
+    public LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     ApplicationUser thisUser;
