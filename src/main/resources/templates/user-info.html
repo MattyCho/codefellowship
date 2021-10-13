@@ -15,6 +15,19 @@
     <div th:text="${'Date of Birth: ' + usersDateOfBirth}"></div>
     <div th:text="${'Biography: ' + usersBio}"></div>
 
+
+    <form action="/createPost" method="POST">
+        <fieldset>
+            <label for="userPost">Write your post</label>
+            <input type="text" name="postBody">
+            <input type="submit" value="Submit post">
+        </fieldset>
+    </form>
+
+    <ul th:each="post: ${usersPostList}">
+        <li th:text="${post.body}"></li>
+    </ul>
+
     <a href="/logout">Log out</a>
 </body>
 </html>
